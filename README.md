@@ -85,7 +85,7 @@ Here is an example of the contents of a single log file, 2018-11-01-events.json:
  | location | varchar      |
  | user_agent | varchar    |
 
- The **users table** which contains:
+ The **users table** schema and data types:
 
  | Field        | Data Type          |
  | ------------- | ------------- |
@@ -95,7 +95,7 @@ Here is an example of the contents of a single log file, 2018-11-01-events.json:
  | gender | varchar      |
  | level | varchar |
 
-The **songs table** which contains:
+The **songs table** schema and data types:
 
  | Field        | Data Type          |
  | ------------- | ------------- |  
@@ -106,7 +106,7 @@ The **songs table** which contains:
  | year | int     |
  | duration | float     |
 
-  The **artists table** which contains:
+  The **artists table** schema and data types:
 
  | Field        | Data Type          |
  | ------------- | ------------- |  
@@ -116,8 +116,7 @@ The **songs table** which contains:
  | latitude | varchar      |
  | longitude | varchar   |
 
- 
-The **time table** which contains:
+The **time table** schema and data types:
 
  | Field        | Data Type          |
  |-------------  | ------------- |
@@ -128,3 +127,14 @@ The **time table** which contains:
  | month | int      |
  | year | int     |  
  | weekday | int     |
+
+## File Description
+
+ - dl.cfg
+  - This file is used to store the AWS Key and AWS Secret.  Add to your .gitignore file to ensure your key and secret are not exposed.
+
+- etl.py
+ - This python script is used to retrieve song and log data from s3 bucket, transform the data and then load parqest files back into s3.
+
+- sql_queries.py
+ - This python script contains the sql queries used to create tables and transform/insert data into the tables.
