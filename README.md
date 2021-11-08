@@ -61,15 +61,15 @@ Here is an example of the contents of a single log file, 2018-11-01-events.json:
 	"userId": "39"
 }
 ```
-## Database Schema
+## Table Design
 
 ### Fact Tables
-songplays - records in log data associated with song plays i.e. records with page NextSong
+- songplays - records in log data associated with song plays i.e. records with page NextSong
 ### Dimension Tables
-users - users in the app
-songs - songs in music database
-artists - artists in music database
-time - timestamps of records in songplays broken down into specific units
+- users - users in the app
+- songs - songs in music database
+- artists - artists in music database
+- time - timestamps of records in songplays broken down into specific units
 
  The **songplays table** schema and data types:
 
