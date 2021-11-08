@@ -68,13 +68,13 @@ songplays - records in log data associated with song plays i.e. records with pag
 * songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent
 ### Dimension Tables
 users - users in the app
-user_id, first_name, last_name, gender, level
+* user_id, first_name, last_name, gender, level
 songs - songs in music database
-song_id, title, artist_id, year, duration
+* song_id, title, artist_id, year, duration
 artists - artists in music database
-artist_id, name, location, lattitude, longitude
+* artist_id, name, location, lattitude, longitude
 time - timestamps of records in songplays broken down into specific units
-start_time, hour, day, week, month, year, weekday
+* start_time, hour, day, week, month, year, weekday
 
  The **songplays table** schema and data types:
 
