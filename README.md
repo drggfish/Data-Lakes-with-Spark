@@ -130,11 +130,11 @@ The **time table** schema and data types:
 
 ## File Description
 
- - dl.cfg
-  -- This file is used to store the AWS Key and AWS Secret.  Add to your .gitignore file to ensure your key and secret are not exposed.
+- dl.cfg
+-- This file is used to store the AWS Key and AWS Secret.  Add to your .gitignore file to ensure your key and secret are not exposed.
 
 - etl.py
- -- This python script is used to retrieve song and log data from s3 bucket, transform the data and then load parqest files back into s3.
+- This python script is used to retrieve song and log data from s3 bucket, transform the data and then load parqest files back into s3.
 
 - sql_queries.py
- -- This python script contains the sql queries used to create tables and transform/insert data into the tables.
+- This python script contains the sql queries used to create tables and transform/insert data into the tables.
