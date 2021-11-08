@@ -82,7 +82,8 @@ start_time, hour, day, week, month, year, weekday
  | ------------- | ------------- |
  | songplay_id      | int |
  | start_time      | int    |  
- | user_id | int  |  
+ | user_id | int  | 
+ | level |  varchar |
  | song_id | varchar      |  
  | artist_id | varchar     |  
  | session_id | int  |
@@ -97,7 +98,7 @@ start_time, hour, day, week, month, year, weekday
  | first_name      | varchar      |
  | last_name | varchar      |
  | gender | varchar      |
- | level | varchar     |
+ | level | varchar |
 
 The **songs table** which contains:
 
