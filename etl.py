@@ -3,8 +3,9 @@ from datetime import datetime
 import os
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import udf, col
-from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, date_format
-
+from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, dayofweek, date_format
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, TimestampType
+import pandas as pd
 
 config = configparser.ConfigParser()
 config.read('dl.cfg')
@@ -23,33 +24,40 @@ def create_spark_session():
 
 def process_song_data(spark, input_data, output_data):
     # get filepath to song data file
-    song_data = 
+    song_data = input_data + 'song_data/*/*/*/*.json'
     
     # read song data file
-    df = 
+    df = spark.read.json(song_data)
 
     # extract columns to create songs table
-    songs_table = 
+    songs_table = df.select('song_id', 'title', 'artist_id', 'year', 'duration').distinct()
     
     # write songs table to parquet files partitioned by year and artist
-    songs_table
+    songs_table.write.mode('overwrite').partitionBy(
+        "year", "artist_id").parquet(output_data+'song_table/')
 
     # extract columns to create artists table
-    artists_table = 
+    artists_table = df.select(
+    "artist_id",
+    col("artist_name").alias("name"),
+    col("artist_location").alias("location"),
+    col("artist_latitude").alias("latitude"),
+    col("artist_longitude").alias("longitude")
+    ).drop_duplicates()
     
     # write artists table to parquet files
-    artists_table
+    artists_table.write.mode('overwrite').parquet(output_data + 'artist_table/')
 
 
 def process_log_data(spark, input_data, output_data):
     # get filepath to log data file
-    log_data =
+    log_data = input_data + 'log_data/*/*/*.json'
 
     # read log data file
-    df = 
+    df = spark.read.json(log_data)
     
     # filter by actions for song plays
-    df = 
+    df = df.filter(df.page == 'NextSong')
 
     # extract columns for users table    
     artists_table = 
@@ -58,15 +66,39 @@ def process_log_data(spark, input_data, output_data):
     artists_table
 
     # create timestamp column from original timestamp column
-    get_timestamp = udf()
-    df = 
+    get_timestamp = udf(lambda ts: datetime.utcfromtimestamp(ts / 1000.0).
+        strftime("%Y-%m-%d %H:%M:%S"), 
+        StringType()
+         )
+    df = df.withColumn('timestamp', get_timestamp("ts"))
     
     # create datetime column from original timestamp column
-    get_datetime = udf()
-    df = 
+    get_datetime = udf(
+        lambda x: datetime.utcfromtimestamp(x / 1000),
+        TimestampType()
+    )
+    df = df.withColumn("datetime", get_datetime("ts"))
     
     # extract columns to create time table
-    time_table = 
+    time_table = (
+        df
+        .withColumn("hour", hour("timestamp"))
+        .withColumn("day", dayofmonth("timestamp"))
+        .withColumn("week", weekofyear("timestamp"))
+        .withColumn("month", month("timestamp"))
+        .withColumn("year", year("timestamp"))
+        .withColumn("weekday", dayofweek("timestamp"))
+        .select(
+            col("timestamp").alias("start_time"),
+            "hour",
+            "day",
+            "week",
+            "month",
+            "year",
+            "weekday"
+        )
+        .drop_duplicates(["year", "month", "day", "hour"])
+    ) 
     
     # write time table to parquet files partitioned by year and month
     time_table
@@ -84,7 +116,7 @@ def process_log_data(spark, input_data, output_data):
 def main():
     spark = create_spark_session()
     input_data = "s3a://udacity-dend/"
-    output_data = ""
+    output_data = "s3a://drggfish-spark-udacity-dend/"
     
     process_song_data(spark, input_data, output_data)    
     process_log_data(spark, input_data, output_data)
