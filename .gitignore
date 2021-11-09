@@ -5,3 +5,4 @@ __pycache__
 test.ipynb
 data/song_data
 data/log_data
+output_data/*
