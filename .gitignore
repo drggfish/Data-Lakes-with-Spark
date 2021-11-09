@@ -3,4 +3,4 @@
 .ipynb_checkpoints
 __pycache__
 test.ipynb
-song_data
+data/song_data
