@@ -22,7 +22,7 @@ SONG_DATA_SCHEMA = StructType([
 
 LOG_DATA_SCHEMA = StructType([
     StructField("auth", StringType()),
-    StructField("userId", StringType()),
+    StructField("userId", IntegerType()),
     StructField("registration", DoubleType()),
     StructField("level", StringType()),
     StructField("firstName", StringType()),
