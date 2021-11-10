@@ -59,12 +59,6 @@ def process_log_data(spark, input_data, output_data):
     # filter by actions for song plays
     df = df.filter(df.page == 'NextSong')
 
-    # extract columns for users table    
-    artists_table = 
-    
-    # write users table to parquet files
-    artists_table
-
     # create timestamp column from original timestamp column
     get_timestamp = udf(lambda ts: datetime.utcfromtimestamp(ts / 1000.0).
         strftime("%Y-%m-%d %H:%M:%S"), 
@@ -101,16 +95,26 @@ def process_log_data(spark, input_data, output_data):
     ) 
     
     # write time table to parquet files partitioned by year and month
-    time_table
+    time_table.write.parquet(
+        os.path.join(output_data, "time_table.parquet"),
+        mode="overwrite",
+        partitionBy=["year", "month"]
+    )
 
     # read in song data to use for songplays table
-    song_df = 
+    song_df = spark.read.parquet(
+        os.path.join(output_data, "songs_table.parquet")
+    )
 
     # extract columns from joined song and log datasets to create songplays table 
     songplays_table = 
 
     # write songplays table to parquet files partitioned by year and month
-    songplays_table
+    songplays_table.write.parquet(
+        os.path.join(output_data, "songplays_table.parquet"),
+        mode="overwrite",
+        partitionBy=["year", "month"]
+    )
 
 
 def main():
