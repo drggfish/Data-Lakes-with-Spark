@@ -29,7 +29,6 @@ def create_spark_session():
         .getOrCreate()
     return spark
 
-
 def process_song_data(spark, input_data, output_data):
     # get filepath to song data file
     song_data = os.path.join(input_data, "song-data", "*", "*", "*", "*.json")
@@ -125,6 +124,7 @@ def process_log_data(spark, input_data, output_data):
         ], "left")
     )
 
+    # extract columns to create songplays table
     songplays_table = (
         songplays_table
         .select(
@@ -153,8 +153,8 @@ def process_log_data(spark, input_data, output_data):
 def main():
     spark = create_spark_session()
 
-    # input_data = 'data/'
-    # output_data = 'data/output_data/'
+    # input_data = 'data/' #local directory for testing
+    # output_data = 'data/output_data/' #local directory for testing
 
     input_data = "s3a://udacity-dend/"
     output_data = "s3a://drggfish-spark-udacity-dend/"
