@@ -1,4 +1,3 @@
-import configparser
 from datetime import datetime
 import os
 from pyspark.sql import SparkSession
