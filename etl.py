@@ -23,13 +23,6 @@ from pyspark.sql.types import (
 )
 from schema import SONG_DATA_SCHEMA, LOG_DATA_SCHEMA
 
-# config = configparser.ConfigParser()
-# config.read('dl.cfg')
-
-# os.environ['AWS_ACCESS_KEY_ID']=config['AWS_ACCESS_KEY_ID']
-# os.environ['AWS_SECRET_ACCESS_KEY']=config['AWS_SECRET_ACCESS_KEY']
-
-
 def create_spark_session():
     spark = SparkSession \
         .builder \
