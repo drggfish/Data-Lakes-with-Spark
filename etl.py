@@ -67,8 +67,8 @@ def process_song_data(spark, input_data, output_data):
 
 def process_log_data(spark, input_data, output_data):
     # get filepath to log data file
-    log_data = os.path.join(input_data, "log-data", "*.json") # LOCAL PATH ON MY MACHINE
-    # log_data = os.path.join(input_data, "log-data", "*", "*", "*.json")
+    # log_data = os.path.join(input_data, "log-data", "*.json") # LOCAL PATH ON MY MACHINE
+    log_data = os.path.join(input_data, "log-data", "*", "*", "*.json")
 
     # read log data file
     df = spark.read.json(log_data, schema=LOG_DATA_SCHEMA)
@@ -161,11 +161,11 @@ def process_log_data(spark, input_data, output_data):
 def main():
     spark = create_spark_session()
 
-    input_data = 'data/'
-    output_data = 'data/output_data/'
+    # input_data = 'data/'
+    # output_data = 'data/output_data/'
 
-    # input_data = "s3a://udacity-dend/"
-    # output_data = "s3a://drggfish-spark-udacity-dend/"
+    input_data = "s3a://udacity-dend/"
+    output_data = "s3a://drggfish-spark-udacity-dend/"
     
     process_song_data(spark, input_data, output_data)    
     process_log_data(spark, input_data, output_data)
