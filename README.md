@@ -134,7 +134,7 @@ The **time table** schema and data types:
 
 - schema.py: Schema used for formatting Spark tables.
 
-- test.ipynb and test2.ipynb: IPython notebooks for testing portions of the code.
+- test1.ipynb and test2.ipynb: IPython notebooks for testing portions of the code.
 
 ## Data Directory
 
